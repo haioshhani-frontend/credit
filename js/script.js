@@ -2,11 +2,32 @@
 let open = document.querySelector('.mobile-header .menu')
 let close = document.querySelector('.sidemenu .close')
 let side = document.querySelector('.sidemenu')
+let heade = document.querySelector('header .container')
+let mid = document.querySelector('header .mid-header')
+let midLink = document.querySelector('header .mid-header a')
 
 open.onclick = ()=> side.classList.add('open')
 
 close.onclick = () => side.classList.remove('open')
 
+
+  window.onscroll = () => {
+    if (window.pageYOffset > 100) {
+      heade.classList.add('active');
+      mid.classList.add('active');
+      midLink.classList.add('active');
+    } else {
+      if (window.innerWidth < 992) {
+        heade.classList.add('active');
+        mid.classList.add('active');
+      midLink.classList.add('active');
+      } else {
+        heade.classList.remove('active');
+        mid.classList.remove('active');
+      midLink.classList.remove('active');
+      }
+    }
+  };
 
   document.addEventListener('DOMContentLoaded', () => {
   const openBtn = document.querySelector('.open-shop');
@@ -51,131 +72,101 @@ if (openBtnMo && closeBtn && cart && overlay) {
 
 
 // carousel
-$(document).ready(function(){
-    $(".owl-carousel").owlCarousel({
-        margin: 15,
-        loop: true,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        stagePadding: 35,
-        nav: true,
-        dots: true,
-        dotsContainer: '.custom-dots',
-        responsive:{
-            0: {
-                items:2
-            },
-            768: {
-                items:1
-            }
-         }
-        })
+document.addEventListener("DOMContentLoaded", () => {
+
+  const sliderContent = document.getElementById("slider-content");
+  const slides = Array.from(sliderContent.children);
+  const leftArrow = document.querySelector(".left-arrow");
+  const rightArrow = document.querySelector(".right-arrow");
+  const dotsContainer = document.querySelector(".custom-dots");
+
+  let currentIndex = 2;
+
+  slides.forEach((_, index) => {
+    let dot = document.createElement("span");
+    dot.dataset.index = index;
+    dotsContainer.appendChild(dot);
   });
 
-// list && grid
-document.addEventListener('DOMContentLoaded', () => {
+  const dots = document.querySelectorAll(".custom-dots span");
 
-  const gridBtn = document.querySelector('.view-grid');
-  const listBtn = document.querySelector('.view-list');
-  const row = document.querySelector('.products-shop .row');
+  function activateDot(i) {
+    dots.forEach(d => d.classList.remove("active"));
+    dots[i].classList.add("active");
+  }
 
-  if (gridBtn && listBtn && row) {
-    listBtn.addEventListener('click', () => {
-      row.classList.add('list-view');
+  activateDot(currentIndex);
+
+  function updateSlider() {
+    slides.forEach(slide => {
+      slide.classList.remove(
+        "position-1",
+        "position-2",
+        "position-3",
+        "position-4",
+        "position-5"
+      );
     });
 
-    gridBtn.addEventListener('click', () => {
-      row.classList.remove('list-view');
+    let total = slides.length;
+
+    let indices = [
+      (currentIndex - 2 + total) % total,
+      (currentIndex - 1 + total) % total,
+      currentIndex,
+      (currentIndex + 1) % total,
+      (currentIndex + 2) % total,
+    ];
+
+    slides[indices[0]].classList.add("position-1");
+    slides[indices[1]].classList.add("position-2");
+    slides[indices[2]].classList.add("position-3");
+    slides[indices[3]].classList.add("position-4");
+    slides[indices[4]].classList.add("position-5");
+
+    activateDot(currentIndex);
+  }
+
+  updateSlider();
+
+  leftArrow.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    updateSlider();
+  });
+
+  rightArrow.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    updateSlider();
+  });
+
+  dots.forEach(dot => {
+    dot.addEventListener("click", () => {
+      currentIndex = parseInt(dot.dataset.index);
+      updateSlider();
     });
-  }
- 
-  // select
-  const filter = document.getElementById("filter");
-  const cards = document.querySelectorAll(".products-shop .col-6");
-
-  if (filter && cards.length > 0) {
-    filter.onchange = () => {
-      cards.forEach(c => {
-        c.style.display = "none";
-
-        if (filter.value === "all") c.style.display = "block";
-        if (filter.value === "new" && c.querySelector(".new")) c.style.display = "block";
-        if (filter.value === "discount" && c.querySelector(".percent")) c.style.display = "block";
-      });
-    };
-  }
+  });
 
 });
 
-
-
-
-// gallery
-
-function registerComponent() {
-    Alpine.data('lightbox', function() {
-      return {
-        urls: [],
-        index: 0,
-
-        init() {
-          this.urls = Array.from(this.$root.querySelectorAll('.gallery img'))
-                           .map(img => img.src);
-        }
-      }
-    });
-  }
-
-  document.addEventListener('alpine:init', registerComponent, false);
-
-  // counter
+// video && img
 document.addEventListener('DOMContentLoaded', () => {
-  const minusBtn = document.getElementById("minus-btn");
-  const count = document.getElementById("count");
-  const plusBtn = document.getElementById("plus-btn");
+  let video = document.querySelector('#use .video-back video');
+  let img = document.querySelector('#use .img-video img');
 
-  if (minusBtn && count && plusBtn) {
-    let countNum = 1;
-    count.innerHTML = countNum;
+  if (video && img) {
 
-    minusBtn.addEventListener("click", () => {
-      if (countNum > 1) { 
-        countNum -= 1;
-        count.innerHTML = countNum;
+    img.onclick = () => {
+      if (!img.classList.contains('active')) {
+        img.classList.add('active');
+        video.play();
       }
-    });
-
-    plusBtn.addEventListener("click", () => {
-      countNum += 1;
-      count.innerHTML = countNum;
-    });
-  }
-
-  const form = document.querySelector('form');
-  const req_inputs = document.querySelectorAll('.required');
-
-  if (form && req_inputs.length > 0) {
-
-    form.onsubmit = (e) => {
-      req_inputs.forEach(el => {
-        if (el.value.trim().length === 0) {
-          e.preventDefault();
-          el.style.borderColor = 'red';
-        } else {
-          el.style.borderColor = '#ababab';
-        }
-      });
     };
 
-    form.onkeyup = () => {
-      req_inputs.forEach(el => {
-        if (el.value.trim().length > 0) {
-          el.style.borderColor = '#ababab';
-        } else {
-          el.style.borderColor = 'red';
-        }
-      });
+    video.onclick = () => {
+      if (img.classList.contains('active')) {
+        video.pause();
+        img.classList.remove('active');
+      }
     };
 
   }

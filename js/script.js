@@ -171,3 +171,112 @@ document.addEventListener('DOMContentLoaded', () => {
 
   }
 });
+
+const carousel = document.querySelector('.carousel');
+const items = document.querySelectorAll('.item');
+
+let currdeg = 0,
+    stepdeg = 60,
+    intervalId = null,
+    rotationId = null,
+    rotationInProgress = false,
+    mouseDownX = 0,
+    mouseUpX = 0;
+
+
+// Detect visibility change and stop/start rotation accordingly
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState === 'hidden') {
+    stopRotation();
+  } else if (document.visibilityState === 'visible') {
+    startRotation();
+  }
+});
+
+carousel.addEventListener('pointerdown', onPointerdown);
+
+// Start the rotation initially
+// startRotation();
+
+function onPointerdown(event) {
+  mouseDownX = event.pageX;
+  stopRotation();
+
+  carousel.setPointerCapture(event.pointerId);
+  carousel.addEventListener('pointerup', onPointerup);
+  carousel.addEventListener('pointercancel', onPointerup);
+  carousel.addEventListener('pointermove', onPointermove);
+}
+
+function onPointerup() {
+  // if (mouseDownX !== 0) {
+  //     handleSwipe();
+  // }
+
+  mouseDownX = 0;
+  mouseUpX = 0;
+  startRotation();
+}
+
+function onPointermove(event) {
+  if (mouseDownX !== 0) {
+    mouseUpX = event.pageX;
+    handleSwipe();
+  }
+}
+
+function handleSwipe() {
+  let swipeThreshold = 50;
+
+  if (mouseUpX - mouseDownX > swipeThreshold) {
+    // Swipe right
+    let dto = { data: { dir: 'p' } };
+    dto.step = mouseUpX - mouseDownX;
+    rotate(dto);
+  } else if (mouseDownX - mouseUpX > swipeThreshold) {
+    // Swipe left
+    let dto = { data: { dir: 'n' } };
+    dto.step = mouseDownX - mouseUpX;
+    rotate(dto);
+  }
+}
+
+function rotate(e) {
+  if (rotationInProgress) {
+    return;
+  }
+
+  rotationInProgress = true;
+
+  if (e.data.dir == 'n') {
+    currdeg -= (e.data.step ?? stepdeg);
+  } else if (e.data.dir == 'p') {
+    currdeg += (e.data.step ?? stepdeg);
+  }
+
+  carousel.style.setProperty('transform', `rotateY(${currdeg}deg)`);
+  items.forEach(item => item.style.setProperty('transform', `rotateY(${-currdeg}deg)`));
+
+  rotationId = setTimeout(function () {
+    clearTimeout(rotationId);
+    rotationInProgress = false;
+  }, 1000);
+}
+
+function startRotation() {
+  if (intervalId === null) {
+    rotationInProgress = false;
+    intervalId = setInterval(function () {
+      rotate({ data: { dir: 'n' } });
+    }, 3000);
+  }
+}
+
+function stopRotation() {
+  if (intervalId !== null) {
+    clearTimeout(rotationId);
+    clearInterval(intervalId);
+    intervalId = null;
+    rotationInProgress = false;
+  }
+}

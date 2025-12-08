@@ -71,7 +71,7 @@ if (openBtnMo && closeBtn && cart && overlay) {
 });
 
 
-// carousel
+// slider
 document.addEventListener("DOMContentLoaded", () => {
 
   const sliderContent = document.getElementById("slider-content");
@@ -172,6 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+
+// carousel
 const carousel = document.querySelector('.carousel');
 const items = document.querySelectorAll('.item');
 
@@ -183,25 +185,49 @@ let currdeg = 0,
     mouseDownX = 0,
     mouseUpX = 0;
 
+const dotsContainer = document.querySelector(".dots");
+const totalSlides = items.length;
 
-// Detect visibility change and stop/start rotation accordingly
-document.addEventListener('visibilitychange', function () {
-  if (document.visibilityState === 'hidden') {
+dotsContainer.innerHTML = "";
+for (let i = 0; i < totalSlides; i++) {
+  let dot = document.createElement("span");
+  dot.classList.add("dot");
+  if (i === 0) dot.classList.add("active");
+  dot.dataset.index = i;
+  dotsContainer.appendChild(dot);
+}
+
+const dots = document.querySelectorAll(".dots .dot");
+
+function updateDots() {
+  let index = Math.round((currdeg % 360) / -stepdeg);
+  if (index < 0) index += totalSlides;
+  dots.forEach(dot => dot.classList.remove("active"));
+  dots[index].classList.add("active");
+}
+
+dots.forEach(dot => {
+  dot.addEventListener("click", () => {
     stopRotation();
-  } else if (document.visibilityState === 'visible') {
+    let index = parseInt(dot.dataset.index);
+    currdeg = -index * stepdeg;
+    carousel.style.setProperty("transform", `rotateY(${currdeg}deg)`);
+    items.forEach(item => item.style.setProperty("transform", `rotateY(${-currdeg}deg)`));
+    updateDots();
     startRotation();
-  }
+  });
+});
+
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState === 'hidden') stopRotation();
+  else startRotation();
 });
 
 carousel.addEventListener('pointerdown', onPointerdown);
 
-// Start the rotation initially
-// startRotation();
-
 function onPointerdown(event) {
   mouseDownX = event.pageX;
   stopRotation();
-
   carousel.setPointerCapture(event.pointerId);
   carousel.addEventListener('pointerup', onPointerup);
   carousel.addEventListener('pointercancel', onPointerup);
@@ -209,10 +235,6 @@ function onPointerdown(event) {
 }
 
 function onPointerup() {
-  // if (mouseDownX !== 0) {
-  //     handleSwipe();
-  // }
-
   mouseDownX = 0;
   mouseUpX = 0;
   startRotation();
@@ -227,37 +249,22 @@ function onPointermove(event) {
 
 function handleSwipe() {
   let swipeThreshold = 50;
-
-  if (mouseUpX - mouseDownX > swipeThreshold) {
-    // Swipe right
-    let dto = { data: { dir: 'p' } };
-    dto.step = mouseUpX - mouseDownX;
-    rotate(dto);
-  } else if (mouseDownX - mouseUpX > swipeThreshold) {
-    // Swipe left
-    let dto = { data: { dir: 'n' } };
-    dto.step = mouseDownX - mouseUpX;
-    rotate(dto);
-  }
+  if (mouseUpX - mouseDownX > swipeThreshold) rotate({ data: { dir: 'p' } });
+  else if (mouseDownX - mouseUpX > swipeThreshold) rotate({ data: { dir: 'n' } });
 }
 
 function rotate(e) {
-  if (rotationInProgress) {
-    return;
-  }
-
+  if (rotationInProgress) return;
   rotationInProgress = true;
 
-  if (e.data.dir == 'n') {
-    currdeg -= (e.data.step ?? stepdeg);
-  } else if (e.data.dir == 'p') {
-    currdeg += (e.data.step ?? stepdeg);
-  }
+  if (e.data.dir == 'n') currdeg -= stepdeg;
+  else if (e.data.dir == 'p') currdeg += stepdeg;
 
   carousel.style.setProperty('transform', `rotateY(${currdeg}deg)`);
   items.forEach(item => item.style.setProperty('transform', `rotateY(${-currdeg}deg)`));
+  updateDots();
 
-  rotationId = setTimeout(function () {
+  rotationId = setTimeout(() => {
     clearTimeout(rotationId);
     rotationInProgress = false;
   }, 1000);
@@ -266,7 +273,7 @@ function rotate(e) {
 function startRotation() {
   if (intervalId === null) {
     rotationInProgress = false;
-    intervalId = setInterval(function () {
+    intervalId = setInterval(() => {
       rotate({ data: { dir: 'n' } });
     }, 3000);
   }

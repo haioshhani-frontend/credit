@@ -75,7 +75,7 @@ header .mid-header-back{
 /* header .mid-header-mo a{
     padding: 24px 10px;
 } */
-header .mid-header.active{
+header .mid-header-back.active{
     inset-block-start: 0;
     inset-inline: 0;
 }
@@ -84,7 +84,7 @@ header .mid-header-back a{
     background-color: #ffffff;
 }
 header .mid-header-back a.active{
-    padding: 12px 15px 8px;
+    padding: 0px 15px;
 }
 header nav .main-header .left-header ul{
     display: flex;
@@ -1299,38 +1299,47 @@ footer .container .row .right-footer ul li{
 /* hero sec */
 #hero-sub{
     position: relative;
-    margin-top: 100px;
-    width: 100%;
+    /* height: 100%; */
+}
+#hero-sub .img-hero{
+    position: absolute;
+    inset: 0;
 }
 #hero-sub .img-hero img{
     object-fit: cover;
     width: 100%;
+    height: 100%;
 }
 #hero-sub .bottom-hero-shop{
     background-color: #F9F1E7;
 }
 #hero-sub .container{
-    display: flex;
+    /* display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
+    position: relative;
+    z-index: 100000;
+    padding-block: 235px 75px;
 }
 #hero-sub .content-hero{
-    position: absolute;
-    inset: 0; 
+    /* position: absolute;
+    inset: 0;  */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-#hero-sub .content-hero h2{
-    font-size: 48px;
-    font-weight: 400;
-    color: #000000;
-    margin-bottom: 2px;
-}
 #hero-sub .content-hero .link{
     display: flex;
     justify-content: center;
+    align-items: center;
+    padding-top: 18px;
+}
+#hero-sub .content-hero .link::before{
+    content: url("../media/home-2-fill.svg");
+    display: flex;
+    align-items: center;
+    padding-right: 3px;
 }
 #hero-sub .content-hero a{
     display: flex;
@@ -1338,41 +1347,187 @@ footer .container .row .right-footer ul li{
     align-items: center;
     font-size: 16px;
     font-weight: 400;
-    color: #000000;
+    color: #ffffff;
 }
 #hero-sub .content-hero a.a-right{
     justify-content: start;
     font-size: 16px;
     font-weight: 300;
-    color: #000000;
+    color: #ffffff;
 }
 #hero-sub .content-hero a.a-right::before{
-    content: url("../media/dashicons_arrow-down-alt2.svg");
+    content: "/";
     padding: 0 6px;
-}
-@media (max-width:990px) {
-#hero-sub .content-hero .logos{
-    display: none;
-}
-#hero-sub .content-hero h2{
-    font-size: 34px;
-    margin-bottom: 0;
-}
-#hero-sub .content-hero a{
-    font-size: 14px;
-}
-}
-@media (max-width:767px) {
-#hero-sub .content-hero h2{
-    font-size: 28px;
-}
-#hero-sub .content-hero a{
-    font-size: 10px;
-}
-}
-@media (max-width:445px) {
-#hero-sub .content-hero h2{
-    font-size: 28px;
-}
+    color: #ffffff;
 }
 /* end hero-shop */
+
+#blog-parent{
+    padding: 106px 0 58px;
+}
+#blog-parent .row .cards{
+    border-bottom: 1px solid #6C6C72;
+    margin-bottom: 40px;
+}
+#blog-parent .card{
+    border: 0;
+    margin-bottom: 54px;
+}
+#blog-parent .card .img-card{
+    display: flex;
+    width: 100%;
+}
+#blog-parent .card .img-card img{
+    width: 100%;
+    height: 100%;
+}
+#blog-parent .card .card-body h5{
+    font-size: 39px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #000000;
+    margin-block: 50px 18px;
+}
+#blog-parent .card .card-body p{
+    font-size: 16px;
+    font-weight: 400;
+    color: #9F9F9F;
+    margin-bottom: 40px;
+}
+#blog-parent .card .card-body a span{
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: underline;
+    color: #5956E9;
+}
+#blog-parent .footer-section-blog{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+#blog-parent .footer-section-blog a{
+    font-size: 24px;
+    font-weight: 600;
+    color: #6C6C72;
+}
+#blog-parent .footer-section-blog a.active{
+    color: #5956E9;
+}
+#blog-parent .right-row{
+    padding: 0 41px;
+}
+#blog-parent .right-row form div{
+    display: flex;
+    border: 1px solid #9F9F9F;
+    border-radius: 5px;
+}
+#blog-parent .right-row form::after{
+    content: "";
+    display: flex;
+    width: 100%;
+    height: 1px;
+    margin-top: 40px;
+    background-color: #6C6C72;
+}
+#blog-parent .right-row form div::before{
+    content: url("../media/search-line.svg");
+    padding: 18px;
+}
+#blog-parent .right-row form div input{
+    width: 100%;
+}
+#blog-parent .right-row div h3{
+    font-size: 31px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000000;
+    padding-block: 40px  13px;
+}
+#blog-parent .right-row .posts .card .img-card{
+    display: flex;
+}
+#blog-parent .right-row .posts .card .img-card img{
+    width: 100%;
+    height: 100%;
+}
+#blog-parent .right-row .posts .card .card-body h4{
+    font-size: 20px;
+    font-weight: 600;
+    color: #000000;
+}
+#blog-parent .right-row .category{
+    border-block: 1px solid #6C6C72;
+    padding-block-end: 40px;
+}
+#blog-parent .right-row .category h3{
+    font-size: 31px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000000;
+    padding-bottom: 13px;
+}
+#blog-parent .right-row .category .accordion-item{
+    border: 0;
+}
+#blog-parent .right-row .category .accordion-item .accordion-button::after {
+    display: none !important;
+}
+#blog-parent .right-row .category .accordion-item .accordion-button::before{
+    content: url("../media/Vector\ 1.svg");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-inline-end: 18px;
+}
+#blog-parent .right-row .category .accordion-item .accordion-button:not(.collapsed)::before{
+    transform: rotate(90deg); 
+}
+#blog-parent .right-row .category .accordion-item .accordion-header button{
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #6C6C72;
+}
+#blog-parent .right-row .tags h3{
+    font-size: 31px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000000;
+    padding-bottom: 13px;
+}
+#blog-parent .right-row .tags .links{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+#blog-parent .right-row .tags .links a span{
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: underline;
+    color: #000000;
+}
+@media (max-width:440px) {
+    #blog-parent .card .card-body h5{
+        font-size: 28px;
+    }
+    #blog-parent .card .card-body .wood-history{
+        /* gap: 10px; */
+    }
+    #blog-parent .card .card-body .wood-history span{
+        font-size: 12px;
+    }
+    #blog-parent .right-row .posts{
+    padding: 43px 0;
+}
+    #blog-parent .right-row .posts .card .card-body h4{
+        font-size: 13px;
+    }
+    #blog-parent .right-row .posts .card .card-body p{
+    font-size: 12px;
+    }
+}
+
+

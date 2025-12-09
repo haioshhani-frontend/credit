@@ -3,8 +3,8 @@ let open = document.querySelector('.mobile-header .menu')
 let close = document.querySelector('.sidemenu .close')
 let side = document.querySelector('.sidemenu')
 let heade = document.querySelector('header .container')
-let mid = document.querySelector('header .mid-header')
-let midLink = document.querySelector('header .mid-header a')
+let mid = document.querySelector('header .mid-header-back')
+let midLink = document.querySelector('header .mid-header-back a')
 
 open.onclick = ()=> side.classList.add('open')
 

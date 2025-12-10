@@ -150,8 +150,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // video && img
 document.addEventListener('DOMContentLoaded', () => {
-  let video = document.querySelector('#use .video-back video');
-  let img = document.querySelector('#use .img-video img');
+  let video = document.querySelector('.video-back video');
+  let img = document.querySelector('.img-video img');
 
   if (video && img) {
 

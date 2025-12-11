@@ -28,7 +28,7 @@ input,button{
     border: 0;
 }
 body{
-    position: relative;
+    /* position: relative; */
  }
 /* header */
 header .container{
@@ -59,31 +59,45 @@ header .left-header{
     justify-content: start;
 }
 header .mid-header,
-header .mid-header-back{
+header .mid-header-back,
+header .mid-header-mo-back{
     display: flex;
     justify-content: center;
     text-align: center;
-    /* z-index: 1; */
 }
 header .mid-header-back{
     position: fixed;
     top: 37px;
     inset-inline: 0;
-    padding: 31px 18px 31px 20px;
+    display: inline-block;
     z-index: 1;
+    padding: 31px 18px 31px 20px;
+    
 }
-/* header .mid-header-mo a{
-    padding: 24px 10px;
-} */
-header .mid-header-back.active{
-    inset-block-start: 0;
+header .mid-header-mo-back{
+    position: fixed;
+    inset-block-start: 103px;
     inset-inline: 0;
+    display: inline-block;
+    z-index: 1;    
+}
+header .mid-header-mo-back.active{
+    display: none;
+}
+header .mid-header-back.active{
+    display: none;
 }
 header .mid-header-back a{
+    inset-block-start: 100px;
     padding: 31px 16px;
     background-color: #ffffff;
 }
-header .mid-header-back a.active{
+header .mid-header-mo-back a{
+    padding: 40px 16px;
+    background-color: #ffffff;
+}
+header .mid-header-back a.active,
+header .mid-header-mo-back a.active{
     padding: 0px 15px;
 }
 header nav .main-header .left-header ul{
@@ -123,14 +137,18 @@ header nav .main-header .right-header a:last-child{
     background-color: #5956E9;
     color: #ffffff;
 }
-header nav .mobile-header button{
+header nav .mobile-header button,
+header nav .mobile-header .mid-header-mo,
+header nav .mobile-header .right-header{
     flex: 1;
     display: flex;
+}
+header nav .mobile-header button{
     justify-content: start;
     align-items: center;
 }
 header nav .mobile-header .right-header{
-    flex: 1;
+    justify-content: end;
     padding: 5px 0;
 }
 header nav .mobile-header .right-header a{
@@ -142,8 +160,6 @@ header nav .mobile-header .right-header a{
     border-radius: 3px;
 }
 header .mid-header-mo{
-    flex: 1;
-    display: flex;
     justify-content: center;
 }
 header .mid-header-mo a{
@@ -162,7 +178,7 @@ header nav .sidemenu{
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    padding: 70px 35px;
+    padding: 67px 35px;
     height: 100vh;
     position: fixed;
     inset-block: 0;
@@ -177,15 +193,14 @@ header nav .sidemenu ul li{
     margin-top: 15px;
     padding-bottom: 15px;
 }
-header nav .sidemenu ul li:not(:last-child){
-    border-bottom: 1px solid #c5c5c5;
-}
 header nav .sidemenu .close{
     position: absolute;
-    inset-block-start: 15px;
-    inset-inline-start: 10px;
+    inset-block-start: 25px;
+    inset-inline-end: 25px;
     border: 0;
-    background-color: transparent;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #5956E9;
     transition: all .8s ease;
 }
 header nav .menu:hover{
@@ -193,7 +208,12 @@ header nav .menu:hover{
 }
 @media (max-width:992px) {
     header .mid-header-mo-back a{
-    padding: 31px 10px 31px 5px;
+    /* padding: 31px 2px 31px 2px; */
+}
+}
+@media (max-width:767px) {
+    header .mid-header-mo-back a{
+    display: none;
 }
 }
 
@@ -815,29 +835,31 @@ section:not(:first-child){
 #use .title p{
     padding-inline: 30%;
 }
-#use .buttom-sec {
+
+
+#use .video {
     position: relative;
-    inset-block-start: 120px;
-    width: 100%;
-    height: 319px; 
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #use .video-back video {
+    position: absolute;
+    inset: 0;
     display: flex;
     width: 100%;
     height: 100%;
+    border-radius: 10px;
     object-fit: cover;
     cursor: pointer;
 }
 
 #use .img-video img {
-    position: absolute;
-    inset: 0;
+    position: relative;
     width: 100%;
     height: 100%;
+    border-radius: 10px;
     object-fit: cover;
     cursor: pointer;
     z-index: 1;
@@ -848,11 +870,6 @@ section:not(:first-child){
 #use .img-video img.active {
     opacity: 0;
     pointer-events: none;
-}
-@media (max-width:1200px) {
-    #use .buttom-sec {
-    height: 231px; 
-}
 }
 #customers{
     position: relative;

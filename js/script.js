@@ -5,6 +5,8 @@ let side = document.querySelector('.sidemenu')
 let heade = document.querySelector('header .container')
 let mid = document.querySelector('header .mid-header-back')
 let midLink = document.querySelector('header .mid-header-back a')
+let midMo = document.querySelector('header .mid-header-mo-back')
+let midLinkMo = document.querySelector('header .mid-header-mo-back a')
 
 open.onclick = ()=> side.classList.add('open')
 
@@ -16,15 +18,17 @@ close.onclick = () => side.classList.remove('open')
       heade.classList.add('active');
       mid.classList.add('active');
       midLink.classList.add('active');
+       midMo.classList.add('active');
+      midLinkMo.classList.add('active');
     } else {
-      if (window.innerWidth < 992) {
+      if (window.innerWidth < 992 && window.pageYOffset > 100) {
         heade.classList.add('active');
-        mid.classList.add('active');
-      midLink.classList.add('active');
       } else {
         heade.classList.remove('active');
         mid.classList.remove('active');
       midLink.classList.remove('active');
+       midMo.classList.remove('active');
+      midLinkMo.classList.remove('active');
       }
     }
   };
@@ -151,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // video && img
 document.addEventListener('DOMContentLoaded', () => {
   let video = document.querySelector('.video-back video');
-  let img = document.querySelector('.img-video img');
+  let img = document.querySelector('#use .img-video img');
 
   if (video && img) {
 

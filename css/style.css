@@ -39,11 +39,10 @@ header .container{
     background-color: #ffffff;
     z-index: 1;
     border-radius: 3px;
-    /* overflow-y: hidden; */
 }
-.active{
-     inset-inline: 0 !important;
-     inset-block-start: 0 !important;
+header .active{
+    inset-block-start: 0 !important;
+    border-radius: 0px;
 }
 header .right-header,
 header .mid-header,
@@ -59,66 +58,37 @@ header .left-header{
     justify-content: start;
 }
 header .mid-header,
-header .mid-header-back,
-header .mid-header-mo-back{
+header .mid-header-mo{
     display: flex;
     justify-content: center;
     text-align: center;
 }
 
-header .mid-header a{
-    
+header .mid-header a,
+header .mid-header-mo a{
 height: 100%;
-    
 display: flex;
-    
 align-items: center;
-    
 justify-content: center;
-    
 position: relative;
 }
-header .mid-header a:before{
+header .mid-header a::before,
+header .mid-header-mo a::before{
     content:"";
     position: absolute;
-    inset: -12px 0px;
     background: #fff;
     z-index: -1;
+    border-radius: 5px;
 }
-header .mid-header-back{
-    position: fixed;
-    top: 37px;
-    inset-inline: 0;
-    display: inline-block;
-    z-index: 1;
-    padding: 31px 18px 31px 20px;
-    
+header .mid-header a::before{
+    inset: -15px 0px;
 }
-header .mid-header-mo-back{
-    position: fixed;
-    inset-block-start: 103px;
-    inset-inline: 0;
-    display: inline-block;
-    z-index: 1;    
+header .mid-header-mo a::before{
+    inset: -10px 0px;
 }
-header .mid-header-mo-back.active{
-    display: none;
-}
-header .mid-header-back.active{
-    display: none;
-}
-header .mid-header-back a{
-    inset-block-start: 100px;
-    padding: 31px 16px;
-    background-color: #ffffff;
-}
-header .mid-header-mo-back a{
-    padding: 40px 16px;
-    background-color: #ffffff;
-}
-header .mid-header-back a.active,
-header .mid-header-mo-back a.active{
-    padding: 0px 15px;
+header .mid-header a.active::before,
+header .mid-header-mo a.active::before{
+    inset: 0px 0px;
 }
 header nav .main-header .left-header ul{
     display: flex;
@@ -169,14 +139,14 @@ header nav .mobile-header button{
 }
 header nav .mobile-header .right-header{
     justify-content: end;
-    padding: 5px 0;
+    padding: 3px 0;
 }
 header nav .mobile-header .right-header a{
     background-color: #5956E9;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 10px;
     font-weight: 600;
-    padding: 12px 15px 8px 16px;
+    padding: 12px 6px;
     border-radius: 3px;
 }
 header .mid-header-mo{
@@ -184,7 +154,7 @@ header .mid-header-mo{
 }
 header .mid-header-mo a{
     display: flex;
-    padding: 26px 10px;
+    padding: 14px 10px;
 }
 header .mid-header-mo a img{
     width: 100%;
@@ -227,14 +197,11 @@ header nav .menu:hover{
     color: #1350A3;
 }
 @media (max-width:992px) {
-    header .mid-header-mo-back a{
-    /* padding: 31px 2px 31px 2px; */
-}
 }
 @media (max-width:767px) {
-    header .mid-header-mo-back a{
-    display: none;
-}
+        header .mid-header a{
+            padding-inline: 5px;
+        }
 }
 
 /* end header */
@@ -260,7 +227,7 @@ main{
     width: 100%;
     position: relative;
     z-index: 1;
-    padding: 180px 0 83px;
+    padding-block: 180px 83px;
 }
 #hero .container .row{
     width: 100%;
@@ -268,10 +235,16 @@ main{
     justify-content: space-between;
     gap: 40px;
 }
-#hero .container .row .left-hero{
-    border: 10px solid #7572FF;
-    margin-left: 50px;
-    padding: 30px;
+#hero .container .row .content{
+    position: relative;
+}
+#hero .container .row .content::before{
+    content: "";
+    position: absolute; 
+    inset: -50px -50px -50px 50px;
+    border: 15px solid #7572FF;
+    background-color: transparent;
+    z-index: -1;
 }
 #hero .container .row .right-hero{
     display: flex;
@@ -284,7 +257,6 @@ main{
 #hero .container .row .content{
     background-color: #ffffff;
     padding: 40px 23px 40px 30px;
-    margin-left: -100px;
 }
 .app{
     display: flex;
@@ -318,6 +290,9 @@ main{
     #hero .container .row .content{
         padding: 14px 7px 14px 18px;
     }
+    #hero .container .row .content::before{
+        inset: -33px -33px -33px 33px;
+    }
     #hero .container .row .content h1{
         font-size: 31px;
     }
@@ -326,20 +301,26 @@ main{
     }
 }
 @media (max-width:767px) {
-    #hero .container .row .left-hero{
-    margin-left: 70px;
-    padding: 20px;
-}
+    #hero .container .row .content{
+        padding: 30px 12px 20px 18px;
+    }
+    #hero .container .row .content::before{
+        inset: -20px -20px -20px 20px;
+        border: 10px solid #7572FF;
+    }
     #hero .container .row .content h1{
         font-size: 25px;
     }
-    #hero .container{
-        padding: 180px 0 83px;
-    }
 }
 
-section:not(:first-child){
-    padding: 120px 0;
+.pb{
+    padding-block: 120px;
+}
+.pb-t{
+    padding-block-start: 120px;
+}
+.pb-b{
+    padding-block-end: 120px;
 }
 .title{
     display: flex;
@@ -401,6 +382,9 @@ section:not(:first-child){
     }
     .title h2{
         font-size: 25px;
+    }
+    .title p{
+        padding-inline: 0;
     }
     #about .container .row .right-sec{
         margin-top: 40px;
@@ -844,29 +828,22 @@ section:not(:first-child){
 }
 
 #use{
-    /* background-color: #5956E9; */
     padding: 48px 0 0 0;
     position: relative;
 }
-
-
 #use:before{
-    content:"";
-    background: blue;
+    content: "";
+    background-image: url(../media/Background\ Image\ \(1\).svg);
     position: absolute;
     inset: 0;
     bottom: 200px;
+    z-index: -1;
 }
 #use .title h2,
 #use .title p{
     color: #ffffff;
     text-align: center;
 }
-#use .title p{
-    padding-inline: 30%;
-}
-
-
 #use .video {
     position: relative;
     display: flex;
@@ -900,6 +877,11 @@ section:not(:first-child){
 #use .img-video img.active {
     opacity: 0;
     pointer-events: none;
+}
+@media (max-width:767px) {
+    #use:before{
+        bottom: 80px;
+    }
 }
 #customers{
     position: relative;
@@ -1073,7 +1055,6 @@ section:not(:first-child){
 }
 #team .card .back-img{
     border-radius: 50%;
-    /* border: 5px dashed #5956E9; */
     padding: 26px;
     position: relative;
 }
@@ -1179,6 +1160,7 @@ section:not(:first-child){
 #team .card .content-card .links .post{
     display: none;
 }
+
 @media (min-width: 993px) and (max-width: 1200px) {
     #team .card .content-card .links .link::after{
     margin: 1px 14px;
@@ -1241,15 +1223,14 @@ section:not(:first-child){
     text-transform: uppercase;
     text-decoration: underline;
 }
-#blog .footer-blog{
+.footer-blog{
     position: relative;
-    inset-block-start: 190px;
+    inset-block-start: 120px;
     box-shadow: 1px 1px 1px 4px rgb(0, 0, 0, .05);
-    
     border-radius: 30px;
     background-color: #ffffff;
 }
-#blog .communication{
+.footer-blog .communication{
     display: flex;
     width: 100%;
     height: 100%;
@@ -1257,49 +1238,49 @@ section:not(:first-child){
     gap: 18px;
     padding: 65px 50px;
 }
-#blog .phone::before{
+.footer-blog .phone::before{
     content: "";
     display: flex;
     width: 2px;
     height: 100%;
     background-color: #6C6C72;
 }
-#blog .communication .left-div{
+.footer-blog .communication .left-div{
     display: flex;
     padding: 30px;
     background-color: #5956E9;
     border-radius: 50%;
 }
-#blog .communication .left-div img{
+.footer-blog .communication .left-div img{
     width: 100%;
     height: 100%;
 }
-#blog .communication .right-div p{
+.footer-blog .communication .right-div p{
     font-size: 25px;
     font-weight: 600;
     color: #000000;
 }
 @media (min-width:993) and (max-width:1200px) {
-#blog .footer-blog{
+.footer-blog{
     padding: 23px 103px 23px 30px;
 }
-#blog .footer-blog .right-div p{
+.footer-blog .right-div p{
     font-size: 16px;
     font-weight: 400;
 }
 }
 @media (max-width:992px) {
-    #blog .footer-blog{
+    .footer-blog{
         padding: 0 33px;
     }
-    #blog .footer-blog .communication{
+    .footer-blog .communication{
         padding-block: 30px;
     }
-    #blog .phone::before{
+    .footer-blog .phone::before{
     width: 117px;
     height: 5px;
 }
-#blog .communication{
+.footer-blog .communication{
     flex-direction: column;
     align-items: center;
 }

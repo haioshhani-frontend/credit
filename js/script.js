@@ -3,10 +3,8 @@ let open = document.querySelector('.mobile-header .menu')
 let close = document.querySelector('.sidemenu .close')
 let side = document.querySelector('.sidemenu')
 let heade = document.querySelector('header .container')
-let mid = document.querySelector('header .mid-header-back')
-let midLink = document.querySelector('header .mid-header-back a')
-let midMo = document.querySelector('header .mid-header-mo-back')
-let midLinkMo = document.querySelector('header .mid-header-mo-back a')
+let mid = document.querySelector('header .mid-header a')
+let midMo = document.querySelector('header .mid-header-mo a')
 
 open.onclick = ()=> side.classList.add('open')
 
@@ -17,19 +15,11 @@ close.onclick = () => side.classList.remove('open')
     if (window.pageYOffset > 100) {
       heade.classList.add('active');
       mid.classList.add('active');
-      midLink.classList.add('active');
-       midMo.classList.add('active');
-      midLinkMo.classList.add('active');
+      midMo.classList.add('active');
     } else {
-      if (window.innerWidth < 992 && window.pageYOffset > 100) {
-        heade.classList.add('active');
-      } else {
-        heade.classList.remove('active');
-        mid.classList.remove('active');
-      midLink.classList.remove('active');
-       midMo.classList.remove('active');
-      midLinkMo.classList.remove('active');
-      }
+      heade.classList.remove('active');
+      mid.classList.remove('active');
+      midMo.classList.remove('active');
     }
   };
 
@@ -291,3 +281,23 @@ function stopRotation() {
     rotationInProgress = false;
   }
 }
+
+
+$(document).ready(function(){
+  $(".team-carousel").owlCarousel({
+    margin: 15,
+    loop: true,
+    autoplayTimeout: 3000,
+    autoplayHoverPause: true,
+    nav: true,
+    dots: false,
+    responsive:{
+      0:{
+        items:1
+      },
+      600:{
+        items:3
+      }
+    }
+  });
+});

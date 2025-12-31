@@ -861,19 +861,33 @@ main{
     object-fit: cover;
     cursor: pointer;
 }
+#use .img-video{
 
-#use .img-video img {
-    position: relative;
+}
+#use .img-video::after{
+    content: url("../media/Vodeo\ Icon.svg");
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    border-radius: 10px;
-    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#use .img-video{
+    position: relative;
     cursor: pointer;
     z-index: 1;
     opacity: 1;
     pointer-events: auto;
 }
-
+#use .img-video img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    
+}
 #use .img-video img.active {
     opacity: 0;
     pointer-events: none;
